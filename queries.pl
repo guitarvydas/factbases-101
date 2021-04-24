@@ -29,56 +29,39 @@ bounding_box(Subject,BB) :-
     Bottom is Y + H,
     BB = [X, Y, Right, Bottom].
 
-% left side
-naive_intersects(Subject,Object) :-
-    write(a0),nl,
-    Subject \= Object,
-    write(a00),nl,
-    bounding_box(Subject,[Ls,_,Rs,_]),
-    write(a1),nl,
-    bounding_box(Object,[Lo,_,_,_]),
-    write(a2),nl,
-    Ls < Lo,
-    write(a3),nl,
-    Rs > Lo.
-% right side
-naive_intersects(Subject,Object) :-
-    write(b0),nl,
-    Subject \= Object,
-    bounding_box(Subject,[Ls,_,Rs,_]),
-    write(b1),nl,
-    bounding_box(Object,[_,_,Ro,_]),
-    write(b2),nl,
-    Ls < Ro,
-    write(b3),nl,
-    Rs > Ro.
-
-
 intersects(Subject,Object) :-
-    bounding_box(Subject,[Ls,_,Rs,_]),
-    bounding_box(Object,[Lo,_,_,_]),
-    Ls < Lo,
-    Rs > Lo,
-    !.
+    dif(Subject,Object),
+    bounding_box(Subject,[SubjL,_,SubjR,_]),
+    bounding_box(Object,[ObjL,_,_,_]),
+    SubjL < ObjL,
+    SubjR > ObjL,
+    format("~w ~w ~w ~w~n",[a,SubjL,SubjR,ObjL]).
+
 % right side
 intersects(Subject,Object) :-
-    bounding_box(Subject,[Ls,_,Rs,_]),
-    bounding_box(Object,[_,_,Ro,_]),
-    Ls < Ro,
-    Rs > Ro,
-    !.
+    dif(Subject,Object),
+    bounding_box(Subject,[SubjL,_,SubjR,_]),
+    bounding_box(Object,[_,_,ObjR,_]),
+    SubjL < ObjR,
+    SubjR > ObjR,
+    format("~w ~w ~w ~w~n",[b,SubjL,SubjR,ObjR]).
+
 % top
 intersects(Subject,Object) :-
-    bounding_box(Subject,[_,Lt,_,Lb]),
-    bounding_box(Object,[_,Rtop,_,_]),
-    Lt < Rtop,
-    Lb > Rtop,
-    !.
+    dif(Subject,Object),
+    bounding_box(Subject,[_,SubjTop,_,SubjBottom]),
+    bounding_box(Object,[_,ObjTop,_,_]),
+    SubjTop < ObjTop,
+    SubjBottom > ObjTop,
+    format("~w ~w ~w ~w~n",[c,SubjTop,SubjBottom,ObjTop]).
+
+
 % bottom
 intersects(Subject,Object) :-
-    bounding_box(Subject,[_,Lt,_,Lb]),
-    bounding_box(Object,[_,_,_,Rbottom]),
-    Lt < Rbottom,
-    Lb > Rbottom,
-    !.
+    dif(Subject,Object),
+    bounding_box(Subject,[_,SubjTop,_,SubjBottom]),
+    bounding_box(Object,[_,_,_,ObjBottom]),
+    SubjTop < ObjBottom,
+    SubjBottom > ObjBottom,
+    format("~w ~w ~w ~w~n",[d,SubjTop,SubjBottom,ObjBottom]).
 
