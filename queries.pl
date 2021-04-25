@@ -65,3 +65,7 @@ intersects(Subject,Object) :-
     SubjBottom > ObjBottom,
     format("~w ~w ~w ~w~n",[d,SubjTop,SubjBottom,ObjBottom]).
 
+lineA_intersects_lineB(Ax1, Ay1, Ax2, Ay2, Bx1, By1, Bx2, By2) :-
+    Bx1 < Ax1,
+    Bx2 > Ax1,
+    By1

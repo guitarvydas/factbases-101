@@ -1,0 +1,48 @@
+intersects(RectA,RectB)
+  ;; true if rectangle RectA intersects any edge of rectangle RectB
+  sub-1: is RectA smaller than RectB?
+  sub-2: only if RectA is smaller than RectB...
+        does RectA' intersect RectB'?
+	sub-sub-1: error out if RectA' or RectB' are single points
+	sub-sub-2: does RectA'' intersect RectB''?
+
+
+============= new notation, using nesting:  ============
+
+intersects?(RectA,RectB) {
+  sub-1: only if
+    assumption neither RectA nor RectB are points {
+      not point (RectA)
+      not point (RectB)
+    assumption {
+      bounding box of (RectA) consists only of vertical and horizontal lines
+      bounding box of (RectB) consists only of vertical and horizontal lines
+    }
+  then only if smaller?(RectA,RectB) {
+    areaA = abs (area (RectA))
+    areaB = abs (area (RectB))
+    return areaA < areaB
+  }
+  then intersects?(RectA,RectB) {
+  }
+
+  and
+
+  sub-2: {
+  }
+}
+
+=== reduce verbiage in this layer  ========
+
+intersects?(RectA,RectB) {
+  sub-1:
+    only if
+      assumption: neither RectA nor RectB are points
+      assumption: bounding box of RectA and RectB consists only of vertical and horizontal lines
+      then only if RectA is smaller than RectB
+      then intersects?(RectA,RectB) {
+      }
+  sub-2: {
+  }
+}
+

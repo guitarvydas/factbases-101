@@ -1,0 +1,57 @@
+*        intersects?(RectA,RectB) {  % RectA intersects RectB iff
+**            assumption neither RectA nor RectB are points
+***      not point (RectA)
+****       not
+*****        point (R)
+******         R.x1 = R.x2 = R.y1 = R.y2
+***      not point (RectB)
+         same as above
+**            assumption
+***      bounding box of (RectA) consists only of vertical and horizontal lines
+****       bounding-box (R) >> BB
+*****        sub-1: get bounding box (R) >> BB
+               foreign get bounding box (R)
+***      bounding box of (RectB) consists only of vertical and horizontal lines
+           same as above
+**            then only if RectA is smaller than RectB
+****            area (Abb) >> Aarea
+                  get bounding box (RectA) >> Abb
+******           assumption Abb is a perfect rectangle
+                   leftSideEqualsRightSide (Abb)
+                   topSideEqualsBottomSide (Abb)
+                   get width (Abb) >> W
+                   get height (Abb) >> H
+*****           >> abs (height * width)
+******            where height = BB.y2 - BB.y1
+******            where width = BB.x2 - BB.x1
+****            area (Bbb) >> Barea
+        (same)
+**            } >> Aarea < Barea
+
+
+* RectA intersects? RectB {
+**    (RectA) is not a point
+**    (RectB) is not a point
+**    bounding box of (RectA) consists only of vertical and horizontal lines
+**    bounding box of (RectB) consists only of vertical and horizontal lines
+**    bounding box of (RectA) is a perfect rectangle
+**    bounding box of (RectB) is a perfect rectangle
+**    (RectA) is smaller than (RectB)
+****  = is not a point (R) {
+          not [is a point (R)]
+*****     (R) is a point {
+             .(R) is a rectangle
+             R.x1 = R.x2
+	     R.y1 = R.y2
+             .foreign: (R) is a rectangle
+        }
+****    bounding box of (R) consists only of vertical and horizontal lines
+
+***   = (R1) is smaller than (R2) {
+      }
+***   = bounding box of (R) consists only of vertical and horizontal lines {
+      }
+***   = bounding box of (R) is a perfect rectangle {
+      }
+* } (RectA) .intersects? (RectB)
+  

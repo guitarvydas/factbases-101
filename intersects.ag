@@ -1,0 +1,34 @@
+(R1) intersects (R2) {
+  check 1 (R1) >> BB1
+  check 2 (R2) >> BB2
+  (BB1) smaller than (BB2)
+  (BB1) bounding box intersects bounding box (BB2) >> Result
+  -- where
+  check 1 (rectangle) >> bounding box
+  (bounding box) smaller than
+} >> Result
+
+intersects < (rectangle) (rectangle) > (!) (#) {
+  check ($1) >> BB1
+  check ($2) >> BB2
+  (BB1) smaller than (BB2)
+  (BB1) inner/intersects (BB2)
+  inner < (rectangle) > (bounding box) (#) {
+    check < (rectangle) > (rectangle) (#)
+    is not a point < (rectangle) > (rectangle) (#)
+    bounding box < (rectangle) > (bounding box) (#)
+    only vertical and horizontal lines < (bounding box) > (bounding box) (#)
+    perfect rectangle < (bounding box) > (bounding box) (#)
+    foreign {
+      is a rectangle < (rectangle) > (rectangle) (#)
+      is not a point < (rectangle) > (rectangle) (#)
+      bounding box < (rectangle) > (bounding box) (#)
+      only vertical and horizontal lines < (bounding box) > (bounding box) (#)
+      perfect rectangle < (bounding box) > (bounding box) (#)
+    }
+  }
+  foreign {
+    check1 < (rectangle) > (bounding box) (#)
+    A smaller than B < (bounding box) (bounding box) >> (#)
+  }
+}
